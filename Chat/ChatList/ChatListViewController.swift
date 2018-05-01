@@ -15,12 +15,10 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.frame = view.frame
-        view.addSubview(tableView)
         self.title = "Chat"
+        self.tableView.rowHeight = 70;
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(ChatListCell.self, forCellReuseIdentifier: "ChatListCell")
     }
 
     // MARK: UITableViewDataSource
@@ -51,7 +49,7 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "section \(section)"
+        return section == 0 ? "Online" : "Offline"
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

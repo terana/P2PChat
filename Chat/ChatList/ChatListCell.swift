@@ -15,7 +15,7 @@ class ChatListCell: UITableViewCell {
 
     func configureCell(withModel model: ChatListCellViewModel) {
         nameLabel.text = model.name
-        timeLabel.text = String(describing: model.date)
+        timeLabel.text = formatDate(date: model.date)
         messageLabel.text = model.message
         if (model.online) {
             self.backgroundColor = UIColor(red: 1.00, green: 239 / 255, blue: 150 / 255, alpha: 1.00)
@@ -23,5 +23,12 @@ class ChatListCell: UITableViewCell {
         if (model.hasUnreadMessages) {
             messageLabel.font = UIFont.boldSystemFont(ofSize: messageLabel.font.pointSize)
         }
+    }
+    
+    func formatDate(date: Date?) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        guard let strong_date = date else { return "NoDate"}
+        return formatter.string(from: strong_date)
     }
 }
