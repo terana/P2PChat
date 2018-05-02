@@ -105,7 +105,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="o3k-d8-2Zi"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fZ2-41-lme"/>
+                    <navigationItem key="navigationItem" id="fZ2-41-lme">
+                        <barButtonItem key="rightBarButtonItem" title="My Profile" id="eYA-2S-iLo">
+                            <connections>
+                                <action selector="onMyProfileButtonTap:" destination="0ns-t0-kd1" id="hSc-Oj-7cb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="2TY-JE-WPb" id="zoJ-dp-m6X"/>
                     </connections>

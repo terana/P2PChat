@@ -20,13 +20,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as?
-        ChatCell else {
-            fatalError("The dequeued cell is not an instance of ChatListTableViewCell.")
+        let model = dataManager.chatCellCellViewModelForIndexPath(indexPath: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: model.outgoing ?
+                "OutgoingMessageCell" : "IncomingMessageCell", for: indexPath) as? ChatCell else {
+            fatalError("Dequeud cell is not ChatCell.")
         }
-
-        let model = self.dataManager.chatCellCellViewModelForIndexPath(indexPath: indexPath)
         cell.configureCell(withModel: model)
+
         return cell
     }
 

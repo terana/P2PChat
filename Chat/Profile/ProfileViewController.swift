@@ -13,7 +13,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var userInfoTextView: UITextView!
     @IBOutlet weak var editButton: UIButton!
- 
+
+    @IBAction func onCloseButtonClick(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         

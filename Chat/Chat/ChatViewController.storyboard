@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,13 +19,59 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" rowHeight="44" id="qiw-lq-jVT" customClass="ChatCell" customModule="Chat" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="IncomingMessageCell" rowHeight="44" id="qiw-lq-jVT" customClass="ChatCell" customModule="Chat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qiw-lq-jVT" id="Iyf-pm-OQG">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Im-1O-kgD">
+                                            <rect key="frame" x="26" y="21" width="63" height="2"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="chC-Hw-rov"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="9Im-1O-kgD" secondAttribute="bottom" constant="10" id="32c-Mx-VJn"/>
+                                        <constraint firstItem="9Im-1O-kgD" firstAttribute="top" secondItem="Iyf-pm-OQG" secondAttribute="topMargin" constant="10" id="7Jl-Ju-Xmm"/>
+                                        <constraint firstItem="9Im-1O-kgD" firstAttribute="leading" secondItem="Iyf-pm-OQG" secondAttribute="leadingMargin" constant="10" id="jPf-xg-En7"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="incomingMessageLabel" destination="9Im-1O-kgD" id="VJR-rM-ezX"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OutgoingMessageCell" id="0a3-oA-cz4" customClass="ChatCell" customModule="Chat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0a3-oA-cz4" id="t0C-4U-hQh">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8i-Jx-Afe">
+                                            <rect key="frame" x="323" y="10" width="42" height="23.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="n01-GC-mig"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="r8i-Jx-Afe" secondAttribute="trailing" constant="10" id="C9X-2o-gqX"/>
+                                        <constraint firstItem="r8i-Jx-Afe" firstAttribute="top" secondItem="t0C-4U-hQh" secondAttribute="top" constant="10" id="bik-Wg-wkR"/>
+                                        <constraint firstAttribute="bottom" secondItem="r8i-Jx-Afe" secondAttribute="bottom" constant="10" id="oRx-me-0L7"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="outgoingMessageLabel" destination="r8i-Jx-Afe" id="ajm-1Y-dqJ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

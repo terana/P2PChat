@@ -10,13 +10,15 @@ import UIKit
 
 class ChatCell: UITableViewCell {
 
+    @IBOutlet weak var incomingMessageLabel: UILabel!
+    @IBOutlet weak var outgoingMessageLabel: UILabel!
+    
     func configureCell(withModel model: ChatCellViewModel) {
-        self.textLabel?.textAlignment = model.outgoing ? .right : .left
-        self.textLabel?.translatesAutoresizingMaskIntoConstraints = false
-        self.textLabel?.frame.size.width = 50
-        self.textLabel?.text = model.message
-        self.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-        self.textLabel?.numberOfLines = 0
-        self.textLabel?.adjustsFontSizeToFitWidth = true
+        let currentMessage = model.outgoing ? outgoingMessageLabel : incomingMessageLabel
+        currentMessage?.isHidden = false
+        currentMessage?.numberOfLines = 0
+        currentMessage?.text = model.message
+        let anotherMessage = !model.outgoing ? outgoingMessageLabel : incomingMessageLabel
+        anotherMessage?.isHidden = true
     }
 }

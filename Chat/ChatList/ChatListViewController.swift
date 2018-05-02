@@ -13,6 +13,15 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     var dataManager = ChatListDataManager()
 
+    @IBAction func onMyProfileButtonTap(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard(name: "ProfileViewController", bundle: nil)
+        guard let profileViewController = storyboard.instantiateViewController(withIdentifier: "profileViewController")
+        as? ProfileViewController else {
+            fatalError("The view controller is not of type ProfileViewController.")
+        }
+        self.present(profileViewController, animated: true)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Chat"
@@ -38,11 +47,11 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "ChatViewController", bundle: nil)
-        guard let chatViewController = storyboard.instantiateViewController(withIdentifier :"chatViewController") as? ChatViewController else {
+        guard let chatViewController = storyboard.instantiateViewController(withIdentifier: "chatViewController") as? ChatViewController else {
             fatalError("The view controller is not of type ChatViewController.")
         }
 
-        chatViewController.dataManager = ChatDataManager (
+        chatViewController.dataManager = ChatDataManager(
                 messagesArray: dataManager.messagesForIndexPath(indexPath: indexPath),
                 name: nil)
         navigationController?.pushViewController(chatViewController, animated: true)
