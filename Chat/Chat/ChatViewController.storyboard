@@ -12,13 +12,13 @@
         <!--Root View Controller-->
         <scene sceneID="B80-oJ-7J3">
             <objects>
-                <tableViewController id="Nf8-yX-o6q" customClass="ChatViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="chatViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nf8-yX-o6q" customClass="ChatViewController" customModule="Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="80N-8j-Fxa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatCell" id="qiw-lq-jVT">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" rowHeight="44" id="qiw-lq-jVT" customClass="ChatCell" customModule="Chat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qiw-lq-jVT" id="Iyf-pm-OQG">
@@ -33,6 +33,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="OpH-Zj-4sg"/>
+                    <connections>
+                        <outlet property="tableView" destination="80N-8j-Fxa" id="FWo-bs-Zye"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tej-ei-TL2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

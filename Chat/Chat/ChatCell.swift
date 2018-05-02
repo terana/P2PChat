@@ -11,6 +11,7 @@ import UIKit
 class ChatCell: UITableViewCell {
 
     func configureCell(withModel model: ChatCellViewModel) {
-
+        self.textLabel?.textAlignment = model.outgoing ? .right : .left
+        self.textLabel?.text = model.message
     }
 }

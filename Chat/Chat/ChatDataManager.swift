@@ -20,6 +20,9 @@ class ChatDataManager {
 
 	func chatCellCellViewModelForIndexPath(indexPath: IndexPath) -> ChatCellViewModel {
 		let messageCellViewModel = ChatCellViewModel()
+		if (self.sortedMessages.count <= indexPath.row) {
+            return messageCellViewModel
+        }
 		let message = self.sortedMessages[indexPath.row]
 		if let outgoing =  message.object(forKey: kOutgoing) as? Bool {
 			messageCellViewModel.outgoing = outgoing

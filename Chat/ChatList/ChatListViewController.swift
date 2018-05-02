@@ -37,11 +37,15 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let profileViewController = storyboard.instantiateInitialViewController() else {
-            return
+        let storyboard = UIStoryboard(name: "ChatViewController", bundle: nil)
+        guard let chatViewController = storyboard.instantiateViewController(withIdentifier :"chatViewController") as? ChatViewController else {
+            fatalError("The view controller is not of type ChatViewController.")
         }
-        navigationController?.pushViewController(profileViewController, animated: true)
+
+        chatViewController.dataManager = ChatDataManager (
+                messagesArray: dataManager.messagesForIndexPath(indexPath: indexPath),
+                name: nil)
+        navigationController?.pushViewController(chatViewController, animated: true)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
