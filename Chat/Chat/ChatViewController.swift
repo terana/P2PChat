@@ -32,14 +32,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: UITableViewDelegate
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let profileViewController = storyboard.instantiateInitialViewController() else {
-            return
-        }
-        navigationController?.pushViewController(profileViewController, animated: true)
-    }
-
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
