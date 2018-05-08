@@ -24,11 +24,22 @@ class ChatListCell: UITableViewCell {
             messageLabel.font = UIFont.boldSystemFont(ofSize: messageLabel.font.pointSize)
         }
     }
-    
+
     func formatDate(date: Date?) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        guard let strong_date = date else { return "NoDate"}
+        guard let strong_date = date else {
+            return "NoDate"
+        }
         return formatter.string(from: strong_date)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nameLabel.text = ""
+        timeLabel.text = ""
+        messageLabel.text = ""
+        self.backgroundColor = UIColor.white
+        messageLabel.font = UIFont.systemFont(ofSize: messageLabel.font.pointSize)
     }
 }

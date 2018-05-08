@@ -12,7 +12,7 @@ class ChatCell: UITableViewCell {
 
     @IBOutlet weak var incomingMessageLabel: UILabel!
     @IBOutlet weak var outgoingMessageLabel: UILabel!
-    
+
     func configureCell(withModel model: ChatCellViewModel) {
         let currentMessage = model.outgoing ? outgoingMessageLabel : incomingMessageLabel
         currentMessage?.isHidden = false
@@ -20,5 +20,11 @@ class ChatCell: UITableViewCell {
         currentMessage?.text = model.message
         let anotherMessage = !model.outgoing ? outgoingMessageLabel : incomingMessageLabel
         anotherMessage?.isHidden = true
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        outgoingMessageLabel.isHidden = true
+        incomingMessageLabel.isHidden = true
     }
 }
