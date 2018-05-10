@@ -24,7 +24,7 @@ class ChatCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        outgoingMessageLabel.isHidden = true
-        incomingMessageLabel.isHidden = true
+        outgoingMessageLabel?.isHidden = true
+        incomingMessageLabel?.isHidden = true
     }
 }
