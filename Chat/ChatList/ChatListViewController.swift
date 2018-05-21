@@ -11,7 +11,7 @@ import UIKit
 class ChatListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    var dataManager = ChatListDataManager()
+    var dataManager = ChatListNetworkDataManager()
 
     @IBAction func onMyProfileButtonTap(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "ProfileViewController", bundle: nil)
@@ -66,7 +66,7 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return section == 0 ? dataManager.onlineSenders.count : dataManager.offlineSenders.count
     }
 
 
