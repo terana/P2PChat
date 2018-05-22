@@ -28,10 +28,15 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.rowHeight = 70;
         tableView.delegate = self
         tableView.dataSource = self
+        self.dataManager.viewController = self
     }
 
+    func refresh() {
+        self.tableView.reloadData()
+        self.tableView.setNeedsDisplay()
+    }
+    
     // MARK: UITableViewDataSource
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as?
         ChatListCell else {

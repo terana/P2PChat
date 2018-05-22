@@ -15,8 +15,9 @@ let kSenders = "Senders"
 let kUserID = "UserID"
 
 class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, ChatDataManageDelegate {
-    var sendersDict = Dictionary<String, NSDictionary>()
+    var sendersDict = Dictionary<String, NSMutableDictionary>()
     var userName = "terana"
+    weak var viewController: ChatListViewController!
 
     let communicator = MultipeerCommunicator()
 
@@ -25,17 +26,30 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
     }
 
     // MARK ChatListDataManager
-    lazy var sendersArray: Array<NSDictionary> = {
+//    lazy var sendersArray: Array<NSDictionary> = {
+//        return Array(sendersDict.values)
+//    }()
+
+    var sendersArray: Array<NSDictionary> {
         return Array(sendersDict.values)
-    }()
-
-    lazy var offlineSenders: Array<NSDictionary> = {
+    }
+    
+//    lazy var offlineSenders: Array<NSDictionary> = {
+//        return self.senders(online: false)
+//    }()
+    
+    var offlineSenders: Array<NSDictionary> {
         return self.senders(online: false)
-    }()
+    }
 
-    lazy var onlineSenders: Array<NSDictionary> = {
+//    lazy var onlineSenders: Array<NSDictionary> = {
+//        return self.senders(online: true)
+//    }()
+    
+    
+    var onlineSenders: Array<NSDictionary> {
         return self.senders(online: true)
-    }()
+    }
 
     var hasOnlineSenders: Bool {
         return onlineSenders.count > 0
@@ -129,18 +143,20 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
 
     private func set(userID: String, userName: String?, online: Bool) {
         guard let conversationDict = sendersDict[userID] as? NSMutableDictionary else {
-            let conversationDict: NSDictionary = [
+            let conversationDict: NSMutableDictionary = [
                 kOnline: online,
                 kUserID: userID,
                 kUserName: userName ?? "NoName"
             ]
             sendersDict[userID] = conversationDict
+            viewController.refresh()
             return
         }
         conversationDict[kOnline] = online
         if let userName = userName {
             conversationDict[kName] = userName
         }
+        viewController.refresh()
     }
 
     func didReceiveMessage(text: String, fromUser: String, toUser: String) {
@@ -153,10 +169,12 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
             kDate: Date(timeIntervalSinceNow: TimeInterval(0))]
         guard let conversationDict = sendersDict[interlocutorID] else {
             sendersDict[interlocutorID] = [kMessages: [message], kUserID: interlocutorID]
+            viewController.refresh()
             return
         }
         var messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
         messages.append(message)
+        viewController.refresh()
     }
 
     //MARK ChatDataManageDelegate
@@ -164,12 +182,18 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
     func send(message: NSDictionary, toUser receiverUserID: String) {
         guard let conversationDict = sendersDict[receiverUserID] else {
             sendersDict[receiverUserID] = [kMessages: [message], kUserID: receiverUserID]
+            viewController.refresh()
             return
         }
+        
+        
         var messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
         messages.append(message)
+        conversationDict[kMessage] = messages
 
         communicator.sendMessage(string: message.object(forKey: kMessage) as? String ?? "",
                 to: receiverUserID, completionHandler: nil)
+        viewController.refresh()
     }
+    
 }
