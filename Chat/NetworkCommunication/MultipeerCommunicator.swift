@@ -6,8 +6,10 @@
 import UIKit
 import MultipeerConnectivity
 
-let kText = "Text"
-let kUserName = "UserName"
+let kText = "text"
+let kUserName = "userName"
+let kEventType = "eventType"
+let kMessageId = "messageId"
 let waitTimeout = TimeInterval(30)
 
 class MultipeerCommunicator: NSObject, IMultipeerCommunicator,
@@ -51,17 +53,20 @@ class MultipeerCommunicator: NSObject, IMultipeerCommunicator,
     func sendMessage(string: String, to userID: String, completionHandler: ((_ success: Bool, _ error: Error?) -> ())?) {
         guard let session = sessionsByPeerID[userID] else {
             print("Failed to send message to \(userID)")
+            completionHandler?(false, nil)
             return
         }
-        let msg = ["eventType": "TextMessage",
-                   "messageId": generateMessageId(),
-                   "text": string]
+        let msg = [kEventType: "TextMessage",
+                   kMessageId: generateMessageId(),
+                   kText: string]
         do {
             try session.send(JSONSerialization.data(withJSONObject: msg),
-                    toPeers: session.connectedPeers, with: MCSessionSendDataMode.unreliable)
+                    toPeers: session.connectedPeers, with: MCSessionSendDataMode.reliable)
         } catch let error {
             print(error)
+            completionHandler?(false, error)
         }
+        completionHandler?(true, nil)
     }
 
     // MARK: MCNearbyServiceAdvertiserDelegate
@@ -72,19 +77,19 @@ class MultipeerCommunicator: NSObject, IMultipeerCommunicator,
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID,
                     withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         invitationHandler(true, nil)
-        do {
-            guard let context = context else {
-                delegate?.didFoundUser(userID: peerID.displayName, userName: "NoName")
-                return
-            }
-
-            let json = try JSONSerialization.jsonObject(with: context, options: []) as? Dictionary<String, String>
-            if let userName = json?[kUserName] {
-                delegate?.didFoundUser(userID: peerID.displayName, userName: userName)
-            }
-        } catch let error {
-            print(error)
-        }
+//        do {
+//            guard let context = context else {
+//                delegate?.didFoundUser(userID: peerID.displayName, userName: "NoName")
+//                return
+//            }
+//
+//            let json = try JSONSerialization.jsonObject(with: context, options: []) as? Dictionary<String, String>
+//            if let userName = json?[kUserName] {
+//                delegate?.didFoundUser(userID: peerID.displayName, userName: userName)
+//            }
+//        } catch let error {
+//            print(error)
+//        }
 
     }
 
@@ -98,6 +103,14 @@ class MultipeerCommunicator: NSObject, IMultipeerCommunicator,
         session.delegate = self
         sessionsByPeerID[peerID.displayName] = session
         multipeerBrowser.invitePeer(peerID, to: session, withContext: nil, timeout: waitTimeout)
+
+        if let info = info {
+            if let userName = info[kUserName] {
+                delegate?.didFoundUser(userID: peerID.displayName, userName: userName)
+            }
+        }
+
+        delegate?.didFoundUser(userID: peerID.displayName, userName: "NoName")
     }
 
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {

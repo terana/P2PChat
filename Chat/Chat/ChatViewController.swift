@@ -8,13 +8,27 @@ import UIKit
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var newMessageInputField: UITextField!
+
+    @IBAction func onSendButtonPressed(_ sender: UIButton) {
+        let text = newMessageInputField.text!
+        dataManager.sendMessage(text: text)
+        newMessageInputField.text = ""
+    }
+
     var dataManager: ChatDataManager!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = dataManager.name
         tableView.delegate = self
         tableView.dataSource = self
+        self.dataManager.chatViewController = self
+    }
+
+    func refresh() {
+        self.tableView.reloadData()
     }
 
     // MARK: UITableViewDataSource
@@ -39,5 +53,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataManager.sortedMessages.count
     }
+
 }
 

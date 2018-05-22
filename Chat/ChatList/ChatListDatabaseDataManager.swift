@@ -2,7 +2,6 @@ import UIKit
 
 
 class ChatListDatabaseDataManager: ChatListDataManager {
-
     var mainDictionary: NSDictionary
 
     init() {
@@ -70,6 +69,12 @@ class ChatListDatabaseDataManager: ChatListDataManager {
         let conversationDict = array[indexPath.row]
         let messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
         return messages
+    }
+
+    func nameForIndexPath(indexPath: IndexPath) -> String {
+        let array = indexPath.section == 0 ? self.onlineSenders : self.offlineSenders
+        let conversationDict = array[indexPath.row]
+        return conversationDict.object(forKey: kName) as? String ?? ""
     }
 
     func conversationCellViewModelForIndexPath(indexPath: IndexPath) -> ChatListCellViewModel {

@@ -25,6 +25,7 @@
 		CBB6B1B5391333E508244506 /* ChatListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B003CAD0B1A70520449B /* ChatListCellViewModel.swift */; };
 		CBB6B1BA00A3FCB75EAD1C7F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6BF7B8F6273758D266807 /* ChatViewController.swift */; };
 		CBB6B1D47B43270587B2A117 /* CommunicatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6BF6B098787CBD1EBD283 /* CommunicatorDelegate.swift */; };
+		CBB6B2856945943CBB1C83C8 /* ChatDataManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B6B5100BE0FA953118BF /* ChatDataManagerDelegate.swift */; };
 		CBB6B40BB767605964D3792C /* ChatListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B55394B6A8FFA72B49F5 /* ChatListDataManager.swift */; };
 		CBB6B4971BE421D30EC3CA53 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B127B04098BF71066BEB /* ChatListViewController.swift */; };
 		CBB6B4D7F16AD895D7D88833 /* ChatListNetworkDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B78BC43073120C8C6F4D /* ChatListNetworkDataManager.swift */; };
@@ -41,6 +42,7 @@
 		CBB6BA44FBD6074FC53BDC92 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B773BB679A959FEF0D74 /* ChatListCell.swift */; };
 		CBB6BAFD9727C654722956C2 /* ChatListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B55394B6A8FFA72B49F5 /* ChatListDataManager.swift */; };
 		CBB6BBED0415AB0AFA76E350 /* ChatListDatabaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6BA5C4EA9378DA7A41B5C /* ChatListDatabaseDataManager.swift */; };
+		CBB6BCD8622935156C8C3A99 /* ChatDataManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B6B5100BE0FA953118BF /* ChatDataManagerDelegate.swift */; };
 		CBB6BD47FA935817E6688DBD /* IMultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B209C79D42D09F2528FF /* IMultipeerCommunicator.swift */; };
 		CBB6BF273EAC23790FAB3022 /* IMultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6B209C79D42D09F2528FF /* IMultipeerCommunicator.swift */; };
 		CBB6BF4687B456D6935AE0C0 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6BF7B8F6273758D266807 /* ChatViewController.swift */; };
@@ -76,6 +78,7 @@
 		CBB6B209C79D42D09F2528FF /* IMultipeerCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMultipeerCommunicator.swift; sourceTree = "<group>"; };
 		CBB6B2C21300F4EF45743DC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Chat/Base.lproj/ProfileViewController.storyboard; sourceTree = SOURCE_ROOT; };
 		CBB6B55394B6A8FFA72B49F5 /* ChatListDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListDataManager.swift; sourceTree = "<group>"; };
+		CBB6B6B5100BE0FA953118BF /* ChatDataManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDataManagerDelegate.swift; sourceTree = "<group>"; };
 		CBB6B773BB679A959FEF0D74 /* ChatListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		CBB6B78BC43073120C8C6F4D /* ChatListNetworkDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListNetworkDataManager.swift; sourceTree = "<group>"; };
 		CBB6B8E855018FAE35A76FE0 /* ChatListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChatListViewController.storyboard; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 				07C81B602098A51100EE80DF /* ChatCell.swift */,
 				07C81B632098A52B00EE80DF /* ChatViewController.storyboard */,
 				CBB6BF7B8F6273758D266807 /* ChatViewController.swift */,
+				CBB6B6B5100BE0FA953118BF /* ChatDataManagerDelegate.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -319,6 +323,7 @@
 				CBB6B887BF654C784E0A5FE6 /* MultipeerCommunicator.swift in Sources */,
 				CBB6B40BB767605964D3792C /* ChatListDataManager.swift in Sources */,
 				CBB6B4D7F16AD895D7D88833 /* ChatListNetworkDataManager.swift in Sources */,
+				CBB6BCD8622935156C8C3A99 /* ChatDataManagerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +344,7 @@
 				CBB6B4DD95AD3C67D4B386FD /* MultipeerCommunicator.swift in Sources */,
 				CBB6BAFD9727C654722956C2 /* ChatListDataManager.swift in Sources */,
 				CBB6B7E6CC14D9F734B2B6AD /* ChatListNetworkDataManager.swift in Sources */,
+				CBB6B2856945943CBB1C83C8 /* ChatDataManagerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

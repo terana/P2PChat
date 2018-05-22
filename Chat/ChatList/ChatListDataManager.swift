@@ -7,5 +7,6 @@ import UIKit
 
 protocol ChatListDataManager: class {
     func messagesForIndexPath(indexPath: IndexPath) -> [NSDictionary]
+    func nameForIndexPath(indexPath: IndexPath) -> String
     func conversationCellViewModelForIndexPath(indexPath: IndexPath) -> ChatListCellViewModel
 }

@@ -53,12 +53,15 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
 
         chatViewController.dataManager = ChatDataManager(
                 messagesArray: dataManager.messagesForIndexPath(indexPath: indexPath),
-                name: nil)
+                name: dataManager.nameForIndexPath(indexPath: indexPath),
+                userID: dataManager.userIDForIndexPath(indexPath: indexPath),
+                delegate: self.dataManager)
+
         navigationController?.pushViewController(chatViewController, animated: true)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

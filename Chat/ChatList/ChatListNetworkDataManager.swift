@@ -12,11 +12,19 @@ let kOnline = "Online"
 let kUnread = "Unread"
 let kDate = "Date"
 let kSenders = "Senders"
+let kUserID = "UserID"
 
-class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager {
+class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, ChatDataManageDelegate {
     var sendersDict = Dictionary<String, NSDictionary>()
     var userName = "terana"
 
+    let communicator = MultipeerCommunicator()
+
+    init() {
+        communicator.delegate = self
+    }
+
+    // MARK ChatListDataManager
     lazy var sendersArray: Array<NSDictionary> = {
         return Array(sendersDict.values)
     }()
@@ -63,12 +71,23 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager {
     }
 
 
-    // MARK ChatListDataManager
     func messagesForIndexPath(indexPath: IndexPath) -> [NSDictionary] {
         let array = indexPath.section == 0 ? self.onlineSenders : self.offlineSenders
         let conversationDict = array[indexPath.row]
         let messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
         return messages
+    }
+
+    func nameForIndexPath(indexPath: IndexPath) -> String {
+        let array = indexPath.section == 0 ? self.onlineSenders : self.offlineSenders
+        let conversationDict = array[indexPath.row]
+        return conversationDict.object(forKey: kName) as? String ?? ""
+    }
+
+    func userIDForIndexPath(indexPath: IndexPath) -> String {
+        let array = indexPath.section == 0 ? self.onlineSenders : self.offlineSenders
+        let conversationDict = array[indexPath.row]
+        return conversationDict.object(forKey: kUserID) as? String ?? ""
     }
 
     func conversationCellViewModelForIndexPath(indexPath: IndexPath) -> ChatListCellViewModel {
@@ -92,38 +111,6 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager {
     }
 
     // MARK CommunicatorDelegate
-    func didFoundUser(userID: String, userName: String?) {
-        set(userID: userID, online: true)
-    }
-
-    func didLostUser(userID: String) {
-        set(userID: userID, online: false)
-    }
-
-    private func set(userID: String, online: Bool) {
-        guard let conversationDict = sendersDict[userID] as? NSMutableDictionary else {
-            sendersDict[userID] = [kOnline: online]
-            return
-        }
-        conversationDict[kOnline] = online
-    }
-
-    func didReceiveMessage(text: String, fromUser: String, toUser: String) {
-        let interlocutorName = fromUser == userName ? toUser : fromUser
-
-        let message: NSDictionary = [
-            kOutgoing: fromUser == userName,
-            kUnread: true,
-            kMessage: text,
-            kDate: Date(timeIntervalSinceNow: TimeInterval(0))]
-        guard let conversationDict = sendersDict[interlocutorName] else {
-            sendersDict[interlocutorName] = [kMessages: [message]]
-            return
-        }
-        var messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
-        messages.append(message)
-    }
-
     func failedToStartBrowsingForUsers(error: Error) {
         print("ChatListNetworkDataManager failedToStartBrowsingForUsers\n \(error)")
     }
@@ -132,4 +119,57 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager {
         print("ChatListNetworkDataManager failedToStartAdvertising\n \(error)")
     }
 
+    func didFoundUser(userID: String, userName: String?) {
+        set(userID: userID, userName: userName, online: true)
+    }
+
+    func didLostUser(userID: String) {
+        set(userID: userID, userName: nil, online: false)
+    }
+
+    private func set(userID: String, userName: String?, online: Bool) {
+        guard let conversationDict = sendersDict[userID] as? NSMutableDictionary else {
+            let conversationDict: NSDictionary = [
+                kOnline: online,
+                kUserID: userID,
+                kUserName: userName ?? "NoName"
+            ]
+            sendersDict[userID] = conversationDict
+            return
+        }
+        conversationDict[kOnline] = online
+        if let userName = userName {
+            conversationDict[kName] = userName
+        }
+    }
+
+    func didReceiveMessage(text: String, fromUser: String, toUser: String) {
+        let interlocutorID = fromUser == userName ? toUser : fromUser
+
+        let message: NSDictionary = [
+            kOutgoing: fromUser == userName,
+            kUnread: true,
+            kMessage: text,
+            kDate: Date(timeIntervalSinceNow: TimeInterval(0))]
+        guard let conversationDict = sendersDict[interlocutorID] else {
+            sendersDict[interlocutorID] = [kMessages: [message], kUserID: interlocutorID]
+            return
+        }
+        var messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
+        messages.append(message)
+    }
+
+    //MARK ChatDataManageDelegate
+
+    func send(message: NSDictionary, toUser receiverUserID: String) {
+        guard let conversationDict = sendersDict[receiverUserID] else {
+            sendersDict[receiverUserID] = [kMessages: [message], kUserID: receiverUserID]
+            return
+        }
+        var messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
+        messages.append(message)
+
+        communicator.sendMessage(string: message.object(forKey: kMessage) as? String ?? "",
+                to: receiverUserID, completionHandler: nil)
+    }
 }
