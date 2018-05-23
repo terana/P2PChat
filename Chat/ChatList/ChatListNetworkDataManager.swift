@@ -142,7 +142,7 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
     }
 
     private func set(userID: String, userName: String?, online: Bool) {
-        guard let conversationDict = sendersDict[userID] as? NSMutableDictionary else {
+        guard let conversationDict = sendersDict[userID] else {
             let conversationDict: NSMutableDictionary = [
                 kOnline: online,
                 kUserID: userID,
@@ -174,6 +174,7 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
         }
         var messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
         messages.append(message)
+        conversationDict[kMessages] = messages
         viewController.refresh()
     }
 
