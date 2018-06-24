@@ -17,16 +17,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func onCloseButtonClick(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-  
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action: #selector(imageViewTapped))
-        
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+
         avatarImageView.addGestureRecognizer(tapGestureRecognizer)
     }
-    
+
     @objc func imageViewTapped() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.allowsEditing = true
@@ -34,20 +34,20 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePickerController.delegate = self
         self.present(imagePickerController, animated: true, completion: nil)
     }
-    
+
     @IBAction func editButtonDidPressed(_ sender: UIButton) {
-        
+
     }
-    
+
     // MARK: - UIImagePickerControllerDelegate
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             avatarImageView.image = image
             picker.dismiss(animated: true, completion: nil)
         }
     }
-    
+
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }

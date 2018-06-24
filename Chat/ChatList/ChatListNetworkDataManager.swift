@@ -25,28 +25,14 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
         communicator.delegate = self
     }
 
-    // MARK ChatListDataManager
-//    lazy var sendersArray: Array<NSDictionary> = {
-//        return Array(sendersDict.values)
-//    }()
-
     var sendersArray: Array<NSDictionary> {
         return Array(sendersDict.values)
     }
-    
-//    lazy var offlineSenders: Array<NSDictionary> = {
-//        return self.senders(online: false)
-//    }()
-    
+
     var offlineSenders: Array<NSDictionary> {
         return self.senders(online: false)
     }
 
-//    lazy var onlineSenders: Array<NSDictionary> = {
-//        return self.senders(online: true)
-//    }()
-    
-    
     var onlineSenders: Array<NSDictionary> {
         return self.senders(online: true)
     }
@@ -125,6 +111,7 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
     }
 
     // MARK CommunicatorDelegate
+
     func failedToStartBrowsingForUsers(error: Error) {
         print("ChatListNetworkDataManager failedToStartBrowsingForUsers\n \(error)")
     }
@@ -186,8 +173,7 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
             viewController.refresh()
             return
         }
-        
-        
+
         var messages = conversationDict.object(forKey: kMessages) as? [NSDictionary] ?? []
         messages.append(message)
         conversationDict[kMessage] = messages
@@ -196,5 +182,5 @@ class ChatListNetworkDataManager: CommunicatorDelegate, ChatListDataManager, Cha
                 to: receiverUserID, completionHandler: nil)
         viewController.refresh()
     }
-    
+
 }

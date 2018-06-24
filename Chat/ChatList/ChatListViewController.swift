@@ -1,7 +1,4 @@
 //
-//  TableViewController.swift
-//  Chat
-//
 //  Created by Anastasia Terenteva on 3/15/18.
 //  Copyright © 2018 Anastasia Terenteva. All rights reserved.
 //
@@ -16,7 +13,7 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func onMyProfileButtonTap(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "ProfileViewController", bundle: nil)
         guard let profileViewController = storyboard.instantiateViewController(withIdentifier: "profileViewController")
-        as? ProfileViewController else {
+                as? ProfileViewController else {
             fatalError("The view controller is not of type ProfileViewController.")
         }
         self.present(profileViewController, animated: true)
@@ -35,11 +32,12 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
         self.tableView.setNeedsDisplay()
     }
-    
+
     // MARK: UITableViewDataSource
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as?
-        ChatListCell else {
+                ChatListCell else {
             fatalError("The dequeued cell is not an instance of ChatListTableViewCell.")
         }
 
@@ -76,6 +74,4 @@ class ChatListViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? dataManager.onlineSenders.count : dataManager.offlineSenders.count
     }
-
-
 }

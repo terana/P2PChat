@@ -12,7 +12,7 @@ class ChatCell: UITableViewCell {
 
     @IBOutlet weak var incomingMessageLabel: UILabel!
     @IBOutlet weak var outgoingMessageLabel: UILabel!
-    
+
 
     func configureCell(withModel model: ChatCellViewModel) {
         let currentMessage = model.outgoing ? outgoingMessageLabel : incomingMessageLabel
